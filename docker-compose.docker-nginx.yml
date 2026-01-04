@@ -1,0 +1,17 @@
+services:
+  server:
+    build: ./apps/server
+    env_file:
+      - env/production.env.example
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./docker/nginx:/etc/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - server
